@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JATS to Elsevier XML Mapper - Comprehensive Testing Framework</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .code-block { font-family: 'Courier New', monospace; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card-hover:hover { transform: translateY(-2px); transition: transform 0.3s ease; }
+        .schema-box { border-left: 4px solid #3b82f6; }
+        .test-case-card { border-left: 4px solid #10b981; }
+        .error-card { border-left: 4px solid #ef4444; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Header -->
+    <header class="gradient-bg text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="text-center">
+                <h1 class="text-4xl font-bold mb-4">
+                    <i class="fas fa-code-branch mr-3"></i>
+                    JATS to Elsevier XML Mapper
+                </h1>
+                <h2 class="text-2xl font-medium mb-6">Comprehensive Testing Framework with XSD Schema Validation</h2>
+                <p class="text-lg opacity-90 max-w-3xl mx-auto">
+                    A complete testing strategy and implementation guide for XML transformation between 
+                    Journal Article Tag Suite (JATS) and Elsevier XML formats with robust schema validation
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Table of Contents -->
+    <section class="bg-white py-8 border-b">
+        <div class="container mx-auto px-6">
+            <h2 class="text-2xl font-bold mb-6 text-center">Table of Contents</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
+                <a href="#overview" class="block p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
+                    <i class="fas fa-info-circle text-blue-600 mr-2"></i>
+                    <span class="font-medium">Overview</span>
+                </a>
+                <a href="#schema-analysis" class="block p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors">
+                    <i class="fas fa-file-code text-green-600 mr-2"></i>
+                    <span class="font-medium">Schema Analysis</span>
+                </a>
+                <a href="#testing-strategy" class="block p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors">
+                    <i class="fas fa-tasks text-purple-600 mr-2"></i>
+                    <span class="font-medium">Testing Strategy</span>
+                </a>
+                <a href="#test-cases" class="block p-4 bg-yellow-50 rounded-lg hover:bg-yellow-100 transition-colors">
+                    <i class="fas fa-vial text-yellow-600 mr-2"></i>
+                    <span class="font-medium">Test Cases</span>
+                </a>
+                <a href="#implementation" class="block p-4 bg-red-50 rounded-lg hover:bg-red-100 transition-colors">
+                    <i class="fas fa-cogs text-red-600 mr-2"></i>
+                    <span class="font-medium">Implementation</span>
+                </a>
+                <a href="#best-practices" class="block p-4 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition-colors">
+                    <i class="fas fa-star text-indigo-600 mr-2"></i>
+                    <span class="font-medium">Best Practices</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section id="overview" class="py-12">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold mb-8 text-center">
+                <i class="fas fa-info-circle text-blue-600 mr-3"></i>
+                Testing Framework Overview
+            </h2>
+            
+            <div class="grid lg:grid-cols-2 gap-8 mb-12">
+                <div class="bg-white rounded-lg shadow-lg p-8 card-hover">
+                    <h3 class="text-xl font-bold mb-4 text-blue-600">
+                        <i class="fas fa-target mr-2"></i>Objectives
+                    </h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Validate JATS XML input against XSD schemas</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Test transformation accuracy and completeness</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Ensure Elsevier XML output compliance</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Handle edge cases and error scenarios</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Performance testing with large files</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-lg p-8 card-hover">
+                    <h3 class="text-xl font-bold mb-4 text-purple-600">
+                        <i class="fas fa-layer-group mr-2"></i>Testing Phases
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-blue-600 font-bold text-sm">1</span>
+                            </div>
+                            <span class="font-medium">Pre-validation (Input Schema)</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-green-600 font-bold text-sm">2</span>
+                            </div>
+                            <span class="font-medium">Transformation Processing</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-yellow-600 font-bold text-sm">3</span>
+                            </div>
+                            <span class="font-medium">Post-validation (Output Schema)</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-red-600 font-bold text-sm">4</span>
+                            </div>
+                            <span class="font-medium">Output Verification</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testing Workflow Diagram -->
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h3 class="text-xl font-bold mb-6 text-center">Testing Workflow</h3>
+                <div style="height: 400px;">
+                    <canvas id="workflowChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Schema Analysis Section -->
+    <section id="schema-analysis" class="py-12 bg-gray-100">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold mb-8 text-center">
+                <i class="fas fa-file-code text-green-600 mr-3"></i>
+                XSD Schema Analysis
+            </h2>
+            
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- JATS Schema -->
+                <div class="bg-white rounded-lg shadow-lg p-8 schema-box">
+                    <h3 class="text-xl font-bold mb-4 text-blue-600">
+                        <i class="fas fa-file-alt mr-2"></i>JATS XML Schema (Input)
+                    </h3>
+                    
+                    <div class="mb-6">
+                        <h4 class="font-semibold text-gray-700 mb-2">Key Elements:</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="bg-blue-50 p-2 rounded code-block">&lt;article&gt; - Root element with article-type attribute</div>
+                            <div class="bg-blue-50 p-2 rounded code-block">&lt;front&gt; - Contains metadata and journal information</div>
+                            <div class="bg-blue-50 p-2 rounded code-block">&lt;article-meta&gt; - Article metadata container</div>
+                            <div class="bg-blue-50 p-2 rounded code-block">&lt;abstract&gt; - Article abstract with paragraphs</div>
+                            <div class="bg-blue-50 p-2 rounded code-block">&lt;kwd-group&gt; - Keywords group</div>
+                            <div class="bg-blue-50 p-2 rounded code-block">&lt;counts&gt; - Page count information</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h4 class="font-semibold text-gray-700 mb-2">Validation Rules:</h4>
+                        <ul class="space-y-1 text-sm text-gray-600">
+                            <li><i class="fas fa-dot-circle text-blue-500 mr-2"></i>Mixed content allowed for text elements</li>
+                            <li><i class="fas fa-dot-circle text-blue-500 mr-2"></i>Optional attributes with use="optional"</li>
+                            <li><i class="fas fa-dot-circle text-blue-500 mr-2"></i>Unbounded occurrence for repeatable elements</li>
+                            <li><i class="fas fa-dot-circle text-blue-500 mr-2"></i>Type constraints (xs:string, xs:byte, xs:short)</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-700 mb-2">Namespaces:</h4>
+                        <div class="space-y-1 text-xs code-block">
+                            <div class="bg-gray-100 p-1 rounded">xmlns:xs="http://www.w3.org/2001/XMLSchema"</div>
+                            <div class="bg-gray-100 p-1 rounded">xmlns:xlink="http://www.w3.org/1999/xlink"</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Elsevier Schema -->
+                <div class="bg-white rounded-lg shadow-lg p-8 schema-box">
+                    <h3 class="text-xl font-bold mb-4 text-green-600">
+                        <i class="fas fa-file-code mr-2"></i>Elsevier XML Schema (Output)
+                    </h3>
+                    
+                    <div class="mb-6">
+                        <h4 class="font-semibold text-gray-700 mb-2">Key Elements:</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="bg-green-50 p-2 rounded code-block">&lt;doi&gt; - Digital Object Identifier</div>
+                            <div class="bg-green-50 p-2 rounded code-block">&lt;given-name&gt; - Author first name</div>
+                            <div class="bg-green-50 p-2 rounded code-block">&lt;surname&gt; - Author last name</div>
+                            <div class="bg-green-50 p-2 rounded code-block">&lt;initials&gt; - Author initials</div>
+                            <div class="bg-green-50 p-2 rounded code-block">&lt;e-address&gt; - Email address with type attribute</div>
+                            <div class="bg-green-50 p-2 rounded code-block">&lt;source-text&gt; - Source text content</div>
+                            <div class="bg-green-50 p-2 rounded code-block">&lt;para&gt; - Paragraph content</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h4 class="font-semibold text-gray-700 mb-2">Target Namespace:</h4>
+                        <div class="bg-gray-100 p-2 rounded text-xs code-block">
+                            targetNamespace="http://www.elsevier.com/xml/ani/common"
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-700 mb-2">Element Characteristics:</h4>
+                        <ul class="space-y-1 text-sm text-gray-600">
+                            <li><i class="fas fa-dot-circle text-green-500 mr-2"></i>Simple string types for most elements</li>
+                            <li><i class="fas fa-dot-circle text-green-500 mr-2"></i>Complex type for e-address with type attribute</li>
+                            <li><i class="fas fa-dot-circle text-green-500 mr-2"></i>Extension base for attribute combinations</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testing Strategy Section -->
+    <section id="testing-strategy" class="py-12">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold mb-8 text-center">
+                <i class="fas fa-tasks text-purple-600 mr-3"></i>
+                Comprehensive Testing Strategy
+            </h2>
+            
+            <!-- Testing Categories -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <div class="bg-white rounded-lg shadow-lg p-6 text-center card-hover">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-check-circle text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Functional Testing</h3>
+                    <p class="text-gray-600 text-sm">Core transformation logic and element mapping accuracy</p>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-lg p-6 text-center card-hover">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-shield-alt text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Schema Validation</h3>
+                    <p class="text-gray-600 text-sm">XSD compliance for both input and output formats</p>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-lg p-6 text-center card-hover">
+                    <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-exclamation-triangle text-yellow-600 text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Edge Case Testing</h3>
+                    <p class="text-gray-600 text-sm">Boundary conditions and unusual input scenarios</p>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-lg p-6 text-center card-hover">
+                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-tachometer-alt text-red-600 text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Performance Testing</h3>
+                    <p class="text-gray-600 text-sm">Large file handling and processing speed optimization</p>
+                </div>
+            </div>
+
+            <!-- Testing Process Flow -->
+            <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <h3 class="text-xl font-bold mb-6 text-center">Testing Process Flow</h3>
+                <div class="grid lg:grid-cols-4 gap-6">
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-upload text-white"></i>
+                        </div>
+                        <h4 class="font-semibold mb-2">Input Validation</h4>
+                        <p class="text-sm text-gray-600">Validate JATS XML against XSD schema</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-sync-alt text-white"></i>
+                        </div>
+                        <h4 class="font-semibold mb-2">Transformation</h4>
+                        <p class="text-sm text-gray-600">Execute JATS to Elsevier mapping</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-search text-white"></i>
+                        </div>
+                        <h4 class="font-semibold mb-2">Output Validation</h4>
+                        <p class="text-sm text-gray-600">Validate Elsevier XML compliance</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-clipboard-check text-white"></i>
+                        </div>
+                        <h4 class="font-semibold mb-2">Verification</h4>
+                        <p class="text-sm text-gray-600">Content accuracy and completeness check</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enhanced XSD Implementation -->
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h3 class="text-xl font-bold mb-6">
+                    <i class="fas fa-code text-indigo-600 mr-2"></i>
+                    Enhanced XSD Validation Implementation
+                </h3>
+                
+                <div class="bg-gray-50 p-6 rounded-lg code-block text-sm overflow-x-auto">
+<pre class="text-gray-800">
+<span class="text-blue-600">class</span> <span class="text-green-600">EnhancedXMLMapper</span>:
+    <span class="text-blue-600">def</span> <span class="text-purple-600">__init__</span>(self, jats_xsd_path, elsevier_xsd_path):
+        self.jats_schema = etree.XMLSchema(etree.parse(jats_xsd_path))
+        self.elsevier_schema = etree.XMLSchema(etree.parse(elsevier_xsd_path))
+        self.validation_errors = []
+        
+    <span class="text-blue-600">def</span> <span class="text-purple-600">validate_input</span>(self, xml_doc):
+        <span class="text-gray-500"># Validate JATS XML against XSD schema</span>
+        <span class="text-blue-600">if</span> <span class="text-blue-600">not</span> self.jats_schema.validate(xml_doc):
+            <span class="text-blue-600">for</span> error <span class="text-blue-600">in</span> self.jats_schema.error_log:
+                self.validation_errors.append({
+                    <span class="text-red-600">'type'</span>: <span class="text-red-600">'input_validation'</span>,
+                    <span class="text-red-600">'line'</span>: error.line,
+                    <span class="text-red-600">'message'</span>: error.message
+                })
+            <span class="text-blue-600">return</span> <span class="text-blue-600">False</span>
+        <span class="text-blue-600">return</span> <span class="text-blue-600">True</span>
+        
+    <span class="text-blue-600">def</span> <span class="text-purple-600">validate_output</span>(self, xml_doc):
+        <span class="text-gray-500"># Validate Elsevier XML against XSD schema</span>
+        <span class="text-blue-600">if</span> <span class="text-blue-600">not</span> self.elsevier_schema.validate(xml_doc):
+            <span class="text-blue-600">for</span> error <span class="text-blue-600">in</span> self.elsevier_schema.error_log:
+                self.validation_errors.append({
+                    <span class="text-red-600">'type'</span>: <span class="text-red-600">'output_validation'</span>,
+                    <span class="text-red-600">'line'</span>: error.line,
+                    <span class="text-red-600">'message'</span>: error.message
+                })
+            <span class="text-blue-600">return</span> <span class="text-blue-600">False</span>
+        <span class="text-blue-600">return</span> <span class="text-blue-600">True</span>
+</pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Test Cases Section -->
+    <section id="test-cases" class="py-12 bg-gray-100">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold mb-8 text-center">
+                <i class="fas fa-vial text-yellow-600 mr-3"></i>
+                Comprehensive Test Cases
+            </h2>
+            
+            <!-- Test Case Categories -->
+            <div class="space-y-8">
+                
+                <!-- Valid XML Test Cases -->
+                <div class="bg-white rounded-lg shadow-lg p-8 test-case-card">
+                    <h3 class="text-xl font-bold mb-4 text-green-600">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        Valid XML Test Cases
+                    </h3>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold mb-3">Standard Article Structure</h4>
+                            <ul class="space-y-2 text-sm text-gray-700">
+                                <li><i class="fas fa-circle text-green-400 mr-2"></i>Complete article with all required elements</li>
+                                <li><i class="fas fa-circle text-green-400 mr-2"></i>Multiple authors with affiliations</li>
+                                <li><i class="fas fa-circle text-green-400 mr-2"></i>Abstract with multiple paragraphs</li>
+                                <li><i class="fas fa-circle text-green-400 mr-2"></i>Keywords group with language attributes</li>
+                                <li><i class="fas fa-circle text-green-400 mr-2"></i>Reference list with various citation types</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-3">Minimal Valid Structure</h4>
+                            <ul class="space-y-2 text-sm text-gray-700">
+                                <li><i class="fas fa-circle text-green-400 mr-2"></i>Article with only required elements</li>
+                                <li><i class="fas fa-circle text-green-400 mr-2"></i>Single author configuration</li>
+                                <li><i class="fas fa-circle text-green-400 mr-2"></i>Basic metadata only</li>
+                                <li><i class="fas fa-circle text-green-400 mr-2"></i>Simple abstract structure</li>
+                                <li><i class="fas fa-circle text-green-400 mr-2"></i>No optional elements present</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Invalid XML Test Cases -->
+                <div class="bg-white rounded-lg shadow-lg p-8 error-card">
+                    <h3 class="text-xl font-bold mb-4 text-red-600">
+                        <i class="fas fa-times-circle mr-2"></i>
+                        Invalid XML Test Cases
+                    </h3>
+                    
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div>
+                            <h4 class="font-semibold mb-3">Structural Issues</h4>
+                            <ul class="space-y-2 text-sm text-gray-700">
+                                <li><i class="fas fa-exclamation-triangle text-red-400 mr-2"></i>Malformed XML syntax</li>
+                                <li><i class="fas fa-exclamation-triangle text-red-400 mr-2"></i>Missing required elements</li>
+                                <li><i class="fas fa-exclamation-triangle text-red-400 mr-2"></i>Incorrect element nesting</li>
+                                <li><i class="fas fa-exclamation-triangle text-red-400 mr-2"></i>Invalid attribute values</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-3">Schema Violations</h4>
+                            <ul class="space-y-2 text-sm text-gray-700">
+                                <li><i class="fas fa-exclamation-triangle text-red-400 mr-2"></i>Wrong namespace declarations</li>
+                                <li><i class="fas fa-exclamation-triangle text-red-400 mr-2"></i>Invalid data types</li>
+                                <li><i class="fas fa-exclamation-triangle text-red-400 mr-2"></i>Cardinality violations</li>
+                                <li><i class="fas fa-exclamation-triangle text-red-400 mr-2"></i>Unknown elements</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-3">Content Issues</h4>
+                            <ul class="space-y-2 text-sm text-gray-700">
+                                <li><i class="fas fa-exclamation-triangle text-red-400 mr-2"></i>Empty required fields</li>
+                                <li><i class="fas fa-exclamation-triangle text-red-400 mr-2"></i>Invalid character encoding</li>
+                                <li><i class="fas fa-exclamation-triangle text-red-400 mr-2"></i>Broken references</li>
+                                <li><i class="fas fa-exclamation-triangle text-red-400 mr-2"></i>Inconsistent metadata</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Edge Cases -->
+                <div class="bg-white rounded-lg shadow-lg p-8" style="border-left: 4px solid #f59e0b;">
+                    <h3 class="text-xl font-bold mb-4 text-yellow-600">
+                        <i class="fas fa-exclamation-circle mr-2"></i>
+                        Edge Case Test Scenarios
+                    </h3>
+                    
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div>
+                            <h4 class="font-semibold mb-3 text-blue-600">Size Extremes</h4>
+                            <ul class="space-y-1 text-sm text-gray-700">
+                                <li>• Empty elements</li>
+                                <li>• Very large content</li>
+                                <li>• Deeply nested structures</li>
+                                <li>• Thousands of references</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-3 text-green-600">Character Sets</h4>
+                            <ul class="space-y-1 text-sm text-gray-700">
+                                <li>• Unicode characters</li>
+                                <li>• Special symbols</li>
+                                <li>• Mathematical notation</li>
+                                <li>• Non-Latin scripts</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-3 text-purple-600">Format Variations</h4>
+                            <ul class="space-y-1 text-sm text-gray-700">
+                                <li>• Different JATS versions</li>
+                                <li>• Custom extensions</li>
+                                <li>• Mixed content types</li>
+                                <li>• Alternative structures</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-3 text-red-600">Error Conditions</h4>
+                            <ul class="space-y-1 text-sm text-gray-700">
+                                <li>• Corrupted files</li>
+                                <li>• Network timeouts</li>
+                                <li>• Memory limitations</li>
+                                <li>• Permission issues</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Test Results Dashboard -->
+            <div class="bg-white rounded-lg shadow-lg p-8 mt-8">
+                <h3 class="text-xl font-bold mb-6 text-center">Test Results Dashboard</h3>
+                <div style="height: 400px;">
+                    <canvas id="testResultsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Implementation Section -->
+    <section id="implementation" class="py-12">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold mb-8 text-center">
+                <i class="fas fa-cogs text-red-600 mr-3"></i>
+                Implementation Details
+            </h2>
+            
+            <!-- Test Framework Architecture -->
+            <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <h3 class="text-xl font-bold mb-6">
+                    <i class="fas fa-sitemap text-blue-600 mr-2"></i>
+                    Test Framework Architecture
+                </h3>
+                
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-database text-blue-600 text-2xl"></i>
+                        </div>
+                        <h4 class="font-bold mb-2">Test Data Management</h4>
+                        <p class="text-sm text-gray-600">Organized test files, schemas, and expected outputs</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-play-circle text-green-600 text-2xl"></i>
+                        </div>
+                        <h4 class="font-bold mb-2">Test Execution Engine</h4>
+                        <p class="text-sm text-gray-600">Automated test runner with parallel processing</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-chart-bar text-purple-600 text-2xl"></i>
+                        </div>
+                        <h4 class="font-bold mb-2">Results Analysis</h4>
+                        <p class="text-sm text-gray-600">Detailed reporting and trend analysis</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sample Test Implementation -->
+            <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <h3 class="text-xl font-bold mb-6">
+                    <i class="fas fa-code text-indigo-600 mr-2"></i>
+                    Sample Test Implementation
+                </h3>
+                
+                <div class="bg-gray-900 text-gray-100 p-6 rounded-lg code-block text-sm overflow-x-auto">
+<pre>
+<span class="text-green-400">#!/usr/bin/env python3</span>
+<span class="text-blue-400">import</span> unittest
+<span class="text-blue-400">import</span> lxml.etree <span class="text-blue-400">as</span> etree
+<span class="text-blue-400">from</span> pathlib <span class="text-blue-400">import</span> Path
+
+<span class="text-blue-400">class</span> <span class="text-yellow-400">JATSToElsevierTest</span>(unittest.TestCase):
+    
+    <span class="text-blue-400">def</span> <span class="text-yellow-400">setUp</span>(self):
+        <span class="text-gray-400"># Load XSD schemas</span>
+        self.jats_schema = etree.XMLSchema(
+            etree.parse(<span class="text-red-400">'schemas/jats.xsd'</span>)
+        )
+        self.elsevier_schema = etree.XMLSchema(
+            etree.parse(<span class="text-red-400">'schemas/elsevier.xsd'</span>)
+        )
+        self.mapper = JATSToElsevierMapper()
+    
+    <span class="text-blue-400">def</span> <span class="text-yellow-400">test_valid_jats_transformation</span>(self):
+        <span class="text-gray-400"># Test with valid JATS XML</span>
+        test_file = Path(<span class="text-red-400">'test_data/valid_jats.xml'</span>)
+        jats_doc = etree.parse(test_file)
+        
+        <span class="text-gray-400"># Validate input</span>
+        self.assertTrue(
+            self.jats_schema.validate(jats_doc),
+            <span class="text-red-400">'Input JATS XML should be valid'</span>
+        )
+        
+        <span class="text-gray-400"># Transform</span>
+        elsevier_doc = self.mapper.transform(jats_doc)
+        
+        <span class="text-gray-400"># Validate output</span>
+        self.assertTrue(
+            self.elsevier_schema.validate(elsevier_doc),
+            <span class="text-red-400">'Output Elsevier XML should be valid'</span>
+        )
+        
+        <span class="text-gray-400"># Check content preservation</span>
+        self.assert_content_preserved(jats_doc, elsevier_doc)
+    
+    <span class="text-blue-400">def</span> <span class="text-yellow-400">test_invalid_input_handling</span>(self):
+        <span class="text-gray-400"># Test error handling for invalid input</span>
+        invalid_xml = <span class="text-red-400">'&lt;invalid&gt;broken xml&lt;/malformed&gt;'</span>
+        
+        <span class="text-blue-400">with</span> self.assertRaises(ValidationError):
+            self.mapper.transform_from_string(invalid_xml)
+    
+    <span class="text-blue-400">def</span> <span class="text-yellow-400">assert_content_preserved</span>(self, jats_doc, elsevier_doc):
+        <span class="text-gray-400"># Verify key content is preserved during transformation</span>
+        jats_title = jats_doc.findtext(<span class="text-red-400">'.//article-title'</span>)
+        elsevier_title = elsevier_doc.findtext(<span class="text-red-400">'.//title'</span>)
+        self.assertEqual(jats_title, elsevier_title)
+
+<span class="text-blue-400">if</span> __name__ == <span class="text-red-400">'__main__'</span>:
+    unittest.main()
+</pre>
+                </div>
+            </div>
+
+            <!-- Test Data Structure -->
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h3 class="text-xl font-bold mb-6">
+                    <i class="fas fa-folder-tree text-green-600 mr-2"></i>
+                    Test Data Organization
+                </h3>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-semibold mb-4">Directory Structure</h4>
+                        <div class="bg-gray-50 p-4 rounded-lg code-block text-sm">
+<pre>
+tests/
+├── schemas/
+│   ├── jats.xsd
+│   └── elsevier.xsd
+├── test_data/
+│   ├── valid/
+│   │   ├── simple_article.xml
+│   │   ├── complex_article.xml
+│   │   └── multi_author.xml
+│   ├── invalid/
+│   │   ├── malformed.xml
+│   │   ├── missing_elements.xml
+│   │   └── wrong_namespace.xml
+│   └── edge_cases/
+│       ├── empty_elements.xml
+│       ├── unicode_content.xml
+│       └── large_file.xml
+├── expected_outputs/
+│   ├── simple_article_expected.xml
+│   └── complex_article_expected.xml
+└── test_runner.py
+</pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold mb-4">Test Categories</h4>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 bg-green-500 rounded-full mt-2 mr-3"></div>
+                                <div>
+                                    <h5 class="font-medium">Positive Tests</h5>
+                                    <p class="text-sm text-gray-600">Valid inputs that should transform successfully</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 bg-red-500 rounded-full mt-2 mr-3"></div>
+                                <div>
+                                    <h5 class="font-medium">Negative Tests</h5>
+                                    <p class="text-sm text-gray-600">Invalid inputs that should trigger error handling</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 bg-yellow-500 rounded-full mt-2 mr-3"></div>
+                                <div>
+                                    <h5 class="font-medium">Boundary Tests</h5>
+                                    <p class="text-sm text-gray-600">Edge cases and limit conditions</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 bg-blue-500 rounded-full mt-2 mr-3"></div>
+                                <div>
+                                    <h5 class="font-medium">Performance Tests</h5>
+                                    <p class="text-sm text-gray-600">Large files and stress testing scenarios</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Practices Section -->
+    <section id="best-practices" class="py-12 bg-gray-100">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold mb-8 text-center">
+                <i class="fas fa-star text-indigo-600 mr-3"></i>
+                Best Practices & Recommendations
+            </h2>
+            
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Testing Best Practices -->
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <h3 class="text-xl font-bold mb-6 text-blue-600">
+                        <i class="fas fa-clipboard-check mr-2"></i>
+                        Testing Best Practices
+                    </h3>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-semibold mb-2 text-gray-800">Schema-First Approach</h4>
+                            <p class="text-sm text-gray-600 mb-2">Always validate against XSD schemas before and after transformation</p>
+                            <ul class="text-xs text-gray-600 space-y-1">
+                                <li>• Use strict validation for production environments</li>
+                                <li>• Maintain schema version compatibility</li>
+                                <li>• Document schema deviations and extensions</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-2 text-gray-800">Comprehensive Coverage</h4>
+                            <p class="text-sm text-gray-600 mb-2">Test all possible input scenarios and edge cases</p>
+                            <ul class="text-xs text-gray-600 space-y-1">
+                                <li>• Include both minimal and maximal valid inputs</li>
+                                <li>• Test with various character encodings</li>
+                                <li>• Verify handling of optional elements</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-2 text-gray-800">Automated Testing</h4>
+                            <p class="text-sm text-gray-600 mb-2">Implement continuous integration for regression testing</p>
+                            <ul class="text-xs text-gray-600 space-y-1">
+                                <li>• Run tests on every code change</li>
+                                <li>• Generate detailed test reports</li>
+                                <li>• Track test coverage metrics</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Performance Optimization -->
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <h3 class="text-xl font-bold mb-6 text-green-600">
+                        <i class="fas fa-rocket mr-2"></i>
+                        Performance Optimization
+                    </h3>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-semibold mb-2 text-gray-800">Memory Management</h4>
+                            <p class="text-sm text-gray-600 mb-2">Optimize for large XML file processing</p>
+                            <ul class="text-xs text-gray-600 space-y-1">
+                                <li>• Use streaming parsers for large files</li>
+                                <li>• Implement memory-efficient transformations</li>
+                                <li>• Clean up temporary objects promptly</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-2 text-gray-800">Parallel Processing</h4>
+                            <p class="text-sm text-gray-600 mb-2">Leverage multi-threading for batch operations</p>
+                            <ul class="text-xs text-gray-600 space-y-1">
+                                <li>• Process multiple files concurrently</li>
+                                <li>• Use thread pools for optimal resource usage</li>
+                                <li>• Implement progress tracking for long operations</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-2 text-gray-800">Caching Strategies</h4>
+                            <p class="text-sm text-gray-600 mb-2">Cache schemas and frequently used data</p>
+                            <ul class="text-xs text-gray-600 space-y-1">
+                                <li>• Cache compiled XSD schemas</li>
+                                <li>• Reuse transformation templates</li>
+                                <li>• Implement intelligent cache invalidation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error Handling Strategies -->
+            <div class="bg-white rounded-lg shadow-lg p-8 mt-8">
+                <h3 class="text-xl font-bold mb-6 text-red-600">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                    Error Handling Strategies
+                </h3>
+                
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div>
+                        <h4 class="font-semibold mb-3 text-blue-600">Validation Errors</h4>
+                        <ul class="space-y-2 text-sm text-gray-700">
+                            <li><i class="fas fa-arrow-right text-blue-400 mr-2"></i>Detailed error reporting with line numbers</li>
+                            <li><i class="fas fa-arrow-right text-blue-400 mr-2"></i>Contextual error messages</li>
+                            <li><i class="fas fa-arrow-right text-blue-400 mr-2"></i>Suggestions for fixing issues</li>
+                            <li><i class="fas fa-arrow-right text-blue-400 mr-2"></i>Batch error collection</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold mb-3 text-green-600">Transformation Errors</h4>
+                        <ul class="space-y-2 text-sm text-gray-700">
+                            <li><i class="fas fa-arrow-right text-green-400 mr-2"></i>Graceful degradation for missing elements</li>
+                            <li><i class="fas fa-arrow-right text-green-400 mr-2"></i>Partial transformation recovery</li>
+                            <li><i class="fas fa-arrow-right text-green-400 mr-2"></i>Rollback mechanisms</li>
+                            <li><i class="fas fa-arrow-right text-green-400 mr-2"></i>Alternative mapping strategies</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold mb-3 text-purple-600">System Errors</h4>
+                        <ul class="space-y-2 text-sm text-gray-700">
+                            <li><i class="fas fa-arrow-right text-purple-400 mr-2"></i>File system error handling</li>
+                            <li><i class="fas fa-arrow-right text-purple-400 mr-2"></i>Network timeout management</li>
+                            <li><i class="fas fa-arrow-right text-purple-400 mr-2"></i>Resource exhaustion recovery</li>
+                            <li><i class="fas fa-arrow-right text-purple-400 mr-2"></i>Logging and monitoring integration</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quality Metrics -->
+            <div class="bg-white rounded-lg shadow-lg p-8 mt-8">
+                <h3 class="text-xl font-bold mb-6 text-center">Quality Metrics Dashboard</h3>
+                <div style="height: 300px;">
+                    <canvas id="qualityMetricsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="gradient-bg text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <h3 class="text-xl font-bold mb-4">JATS to Elsevier XML Mapper Testing Framework</h3>
+            <p class="opacity-90 mb-4">Comprehensive testing strategy for reliable XML transformation</p>
+            <div class="flex justify-center space-x-6 text-sm">
+                <span><i class="fas fa-shield-alt mr-1"></i>Schema Validation</span>
+                <span><i class="fas fa-sync-alt mr-1"></i>Automated Testing</span>
+                <span><i class="fas fa-chart-line mr-1"></i>Performance Monitoring</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Workflow Chart
+        const workflowCtx = document.getElementById('workflowChart').getContext('2d');
+        new Chart(workflowCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Input Validation', 'Transformation', 'Output Validation', 'Verification'],
+                datasets: [{
+                    data: [25, 35, 25, 15],
+                    backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444'],
+                    borderWidth: 2,
+                    borderColor: '#ffffff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 20,
+                            usePointStyle: true
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Testing Phase Distribution',
+                        font: { size: 16, weight: 'bold' }
+                    }
+                }
+            }
+        });
+
+        // Test Results Chart
+        const testResultsCtx = document.getElementById('testResultsChart').getContext('2d');
+        new Chart(testResultsCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Valid XML', 'Invalid XML', 'Edge Cases', 'Performance', 'Schema Validation'],
+                datasets: [{
+                    label: 'Passed',
+                    data: [48, 32, 28, 15, 42],
+                    backgroundColor: '#10b981',
+                    borderColor: '#059669',
+                    borderWidth: 1
+                }, {
+                    label: 'Failed',
+                    data: [2, 8, 12, 5, 3],
+                    backgroundColor: '#ef4444',
+                    borderColor: '#dc2626',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Test Results by Category',
+                        font: { size: 16, weight: 'bold' }
+                    }
+                },
+                scales: {
+                    x: {
+                        stacked: true
+                    },
+                    y: {
+                        stacked: true,
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Quality Metrics Chart
+        const qualityCtx = document.getElementById('qualityMetricsChart').getContext('2d');
+        new Chart(qualityCtx, {
+            type: 'radar',
+            data: {
+                labels: ['Test Coverage', 'Code Quality', 'Performance', 'Documentation', 'Error Handling', 'Maintainability'],
+                datasets: [{
+                    label: 'Current State',
+                    data: [85, 92, 78, 88, 82, 75],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    borderWidth: 2,
+                    pointBackgroundColor: '#3b82f6'
+                }, {
+                    label: 'Target',
+                    data: [95, 95, 90, 95, 90, 85],
+                    borderColor: '#10b981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    borderWidth: 2,
+                    pointBackgroundColor: '#10b981'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            stepSize: 20
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
